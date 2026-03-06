@@ -1,16 +1,35 @@
+import { Suspense } from "react";
 import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/HeroSection";
 import { FeaturedPropertyCard } from "@/components/FeaturedPropertyCard";
 import { PropertyCard } from "@/components/PropertyCard";
-import { featuredProperties, newMarketProperties } from "@/lib/mock-properties";
+import { Pagination } from "@/components/Pagination";
+import { getProperties, getFeaturedProperties } from "@/lib/properties";
 
-export default function Home() {
+const PAGE_SIZE = 6;
+
+interface HomeProps {
+  searchParams: Promise<{ page?: string }>;
+}
+
+export default async function Home({ searchParams }: HomeProps) {
+  const params = await searchParams;
+  const currentPage = Math.max(1, parseInt(params.page ?? "1", 10));
+
+  const [{ data: properties, total }, featuredProperties] = await Promise.all([
+    getProperties(currentPage, PAGE_SIZE),
+    getFeaturedProperties(),
+  ]);
+
+  const totalPages = Math.ceil(total / PAGE_SIZE);
+
   return (
     <>
       <Navbar />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 mt-4 backdrop-blur-md">
         <HeroSection />
 
+        {/* Featured Collections */}
         <section className="mb-16">
           <div className="flex items-end justify-between mb-8">
             <div>
@@ -28,6 +47,7 @@ export default function Home() {
           </div>
         </section>
 
+        {/* New in Market */}
         <section>
           <div className="flex items-end justify-between mb-8">
             <div>
@@ -40,21 +60,19 @@ export default function Home() {
               <button className="px-4 py-1.5 rounded-md text-sm font-medium text-nordic-muted hover:text-nordic-dark dark:hover:text-white">Rent</button>
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {newMarketProperties.map((property, index) => {
-              let hiddenClass = "";
-              if (index === 4) hiddenClass = "hidden xl:flex";
-              if (index === 5) hiddenClass = "hidden lg:flex";
-              return (
-                <PropertyCard key={property.id} property={property} hiddenClass={hiddenClass} />
-              )
-            })}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {properties.map((property) => (
+              <PropertyCard key={property.id} property={property} />
+            ))}
+            {properties.length === 0 && (
+              <p className="col-span-full text-center text-nordic-muted py-16">No properties found.</p>
+            )}
           </div>
-          <div className="mt-12 text-center">
-            <button className="px-8 py-3 bg-white dark:bg-white/5 border border-nordic-dark/10 dark:border-white/10 hover:border-mosque hover:text-mosque text-nordic-dark dark:text-white font-medium rounded-lg transition-all hover:shadow-md">
-              Load more properties
-            </button>
-          </div>
+
+          <Suspense>
+            <Pagination currentPage={currentPage} totalPages={totalPages} />
+          </Suspense>
         </section>
       </main>
     </>

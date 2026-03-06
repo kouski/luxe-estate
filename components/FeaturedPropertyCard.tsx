@@ -1,5 +1,5 @@
 import React from "react";
-import { Property } from "../lib/mock-properties";
+import { Property } from "../lib/properties";
 
 export function FeaturedPropertyCard({ property }: { property: Property }) {
     return (
@@ -7,9 +7,9 @@ export function FeaturedPropertyCard({ property }: { property: Property }) {
             <div className="aspect-[4/3] w-full overflow-hidden relative">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                    alt={property.imageAlt}
+                    alt={property.image_alt}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    src={property.imageUrl}
+                    src={property.image_url}
                 />
                 {property.tag && (
                     <div className="absolute top-4 left-4 bg-white/90 dark:bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-nordic-dark dark:text-white">
@@ -33,7 +33,7 @@ export function FeaturedPropertyCard({ property }: { property: Property }) {
                     </div>
                     <span className="text-xl font-semibold text-mosque dark:text-primary">
                         {property.price}
-                        {property.priceSuffix && <span className="text-sm font-normal text-nordic-muted">{property.priceSuffix}</span>}
+                        {property.price_suffix && <span className="text-sm font-normal text-nordic-muted">{property.price_suffix}</span>}
                     </span>
                 </div>
                 <div className="flex items-center gap-6 mt-6 pt-6 border-t border-nordic-dark/5 dark:border-white/10">

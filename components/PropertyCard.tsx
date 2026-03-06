@@ -1,5 +1,5 @@
 import React from "react";
-import { Property } from "../lib/mock-properties";
+import { Property } from "../lib/properties";
 
 export function PropertyCard({ property, hiddenClass }: { property: Property, hiddenClass?: string }) {
     const getTagColor = (tag?: string) => {
@@ -12,9 +12,9 @@ export function PropertyCard({ property, hiddenClass }: { property: Property, hi
             <div className="relative aspect-[4/3] overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                    alt={property.imageAlt}
+                    alt={property.image_alt}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    src={property.imageUrl}
+                    src={property.image_url}
                 />
                 <button className="absolute top-3 right-3 p-2 bg-white/90 dark:bg-black/50 rounded-full hover:bg-mosque hover:text-white transition-colors text-nordic-dark">
                     <span className="material-icons text-lg">favorite_border</span>
@@ -29,7 +29,7 @@ export function PropertyCard({ property, hiddenClass }: { property: Property, hi
                 <div className="flex justify-between items-baseline mb-2">
                     <h3 className="font-bold text-lg text-nordic-dark dark:text-white">
                         {property.price}
-                        {property.priceSuffix && <span className="text-sm font-normal text-nordic-muted">{property.priceSuffix}</span>}
+                        {property.price_suffix && <span className="text-sm font-normal text-nordic-muted">{property.price_suffix}</span>}
                     </h3>
                 </div>
                 <h4 className="text-nordic-dark dark:text-gray-200 font-medium truncate mb-1">{property.title}</h4>
