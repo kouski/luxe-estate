@@ -1,11 +1,14 @@
 import React from "react";
 import { Property } from "../lib/properties";
+import { togglePropertyFeatured } from "@/app/actions";
 
 export function PropertyCard({ property, hiddenClass }: { property: Property, hiddenClass?: string }) {
     const getTagColor = (tag?: string) => {
         if (tag === "FOR RENT") return "bg-mosque/90";
         return "bg-nordic-dark/90";
     };
+
+    const toggleAction = togglePropertyFeatured.bind(null, property.id, property.featured);
 
     return (
         <article className={`bg-white dark:bg-white/5 rounded-xl overflow-hidden shadow-card hover:shadow-soft transition-all duration-300 group cursor-pointer h-full flex flex-col ${hiddenClass || ""}`}>
@@ -16,9 +19,11 @@ export function PropertyCard({ property, hiddenClass }: { property: Property, hi
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     src={property.image_url}
                 />
-                <button className="absolute top-3 right-3 p-2 bg-white/90 dark:bg-black/50 rounded-full hover:bg-mosque hover:text-white transition-colors text-nordic-dark">
-                    <span className="material-icons text-lg">favorite_border</span>
-                </button>
+                <form action={toggleAction} className="absolute top-3 right-3 z-10">
+                    <button type="submit" className={`p-2 rounded-full transition-colors ${property.featured ? 'bg-mosque text-white' : 'bg-white/90 dark:bg-black/50 text-nordic-dark hover:bg-mosque hover:text-white'}`}>
+                        <span className="material-icons text-lg">{property.featured ? 'favorite' : 'favorite_border'}</span>
+                    </button>
+                </form>
                 {property.tag && (
                     <div className={`absolute bottom-3 left-3 ${getTagColor(property.tag)} text-white text-xs font-bold px-2 py-1 rounded`}>
                         {property.tag}

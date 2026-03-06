@@ -1,7 +1,10 @@
 import React from "react";
 import { Property } from "../lib/properties";
+import { togglePropertyFeatured } from "@/app/actions";
 
 export function FeaturedPropertyCard({ property }: { property: Property }) {
+    const toggleAction = togglePropertyFeatured.bind(null, property.id, property.featured);
+
     return (
         <div className="group relative rounded-xl overflow-hidden shadow-soft bg-white dark:bg-white/5 cursor-pointer">
             <div className="aspect-[4/3] w-full overflow-hidden relative">
@@ -16,9 +19,11 @@ export function FeaturedPropertyCard({ property }: { property: Property }) {
                         {property.tag}
                     </div>
                 )}
-                <button className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 dark:bg-black/60 backdrop-blur-sm flex items-center justify-center text-nordic-dark hover:bg-mosque hover:text-white transition-all">
-                    <span className="material-icons text-xl">favorite_border</span>
-                </button>
+                <form action={toggleAction} className="absolute top-4 right-4 z-10">
+                    <button type="submit" className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${property.featured ? 'bg-mosque text-white' : 'bg-white/90 dark:bg-black/60 backdrop-blur-sm text-nordic-dark hover:bg-mosque hover:text-white'}`}>
+                        <span className="material-icons text-xl">{property.featured ? 'favorite' : 'favorite_border'}</span>
+                    </button>
+                </form>
                 <div className="absolute bottom-0 inset-x-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
             </div>
             <div className="p-6 relative">
