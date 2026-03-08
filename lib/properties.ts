@@ -14,6 +14,8 @@ export type Property = {
   tag: string | null;
   featured: boolean;
   created_at: string;
+  slug?: string;
+  images?: string[];
 };
 
 const DEFAULT_PAGE_SIZE = 6;
@@ -59,4 +61,22 @@ export async function getFeaturedProperties(): Promise<Property[]> {
   }
 
   return data ?? [];
+}
+
+/**
+ * Fetch a single property by its unique slug.
+ */
+export async function getPropertyBySlug(slug: string): Promise<Property | null> {
+  const { data, error } = await supabase
+    .from("properties")
+    .select("*")
+    .eq("slug", slug)
+    .single();
+
+  if (error) {
+    console.error("Error fetching property by slug:", error.message);
+    return null;
+  }
+
+  return data;
 }

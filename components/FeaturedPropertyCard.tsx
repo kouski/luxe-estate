@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { Property } from "../lib/properties";
 import { togglePropertyFeatured } from "@/app/actions";
 
@@ -8,12 +9,14 @@ export function FeaturedPropertyCard({ property }: { property: Property }) {
     return (
         <div className="group relative rounded-xl overflow-hidden shadow-soft bg-white dark:bg-white/5 cursor-pointer">
             <div className="aspect-[4/3] w-full overflow-hidden relative">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                    alt={property.image_alt}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    src={property.image_url}
-                />
+                <Link href={`/properties/${property.slug}`} className="absolute inset-0 z-0">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                        alt={property.image_alt}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        src={property.image_url}
+                    />
+                </Link>
                 {property.tag && (
                     <div className="absolute top-4 left-4 bg-white/90 dark:bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-nordic-dark dark:text-white">
                         {property.tag}
@@ -30,7 +33,9 @@ export function FeaturedPropertyCard({ property }: { property: Property }) {
                 <div className="flex justify-between items-start mb-2">
                     <div>
                         <h3 className="text-xl font-medium text-nordic-dark dark:text-white group-hover:text-mosque transition-colors">
-                            {property.title}
+                            <Link href={`/properties/${property.slug}`}>
+                                {property.title}
+                            </Link>
                         </h3>
                         <p className="text-nordic-muted text-sm flex items-center gap-1 mt-1">
                             <span className="material-icons text-sm">place</span> {property.location}

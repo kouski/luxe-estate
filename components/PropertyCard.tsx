@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { Property } from "../lib/properties";
 import { togglePropertyFeatured } from "@/app/actions";
 
@@ -13,12 +14,14 @@ export function PropertyCard({ property, hiddenClass }: { property: Property, hi
     return (
         <article className={`bg-white dark:bg-white/5 rounded-xl overflow-hidden shadow-card hover:shadow-soft transition-all duration-300 group cursor-pointer h-full flex flex-col ${hiddenClass || ""}`}>
             <div className="relative aspect-[4/3] overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                    alt={property.image_alt}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    src={property.image_url}
-                />
+                <Link href={`/properties/${property.slug}`} className="w-full h-full block">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                        alt={property.image_alt}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        src={property.image_url}
+                    />
+                </Link>
                 <form action={toggleAction} className="absolute top-3 right-3 z-10">
                     <button type="submit" className={`p-2 rounded-full transition-colors ${property.featured ? 'bg-mosque text-white' : 'bg-white/90 dark:bg-black/50 text-nordic-dark hover:bg-mosque hover:text-white'}`}>
                         <span className="material-icons text-lg">{property.featured ? 'favorite' : 'favorite_border'}</span>
@@ -37,7 +40,11 @@ export function PropertyCard({ property, hiddenClass }: { property: Property, hi
                         {property.price_suffix && <span className="text-sm font-normal text-nordic-muted">{property.price_suffix}</span>}
                     </h3>
                 </div>
-                <h4 className="text-nordic-dark dark:text-gray-200 font-medium truncate mb-1">{property.title}</h4>
+                <h4 className="text-nordic-dark dark:text-gray-200 font-medium truncate mb-1">
+                    <Link href={`/properties/${property.slug}`} className="hover:text-mosque transition-colors">
+                        {property.title}
+                    </Link>
+                </h4>
                 <p className="text-nordic-muted text-xs mb-4">{property.location}</p>
                 <div className="mt-auto flex items-center justify-between pt-3 border-t border-gray-100 dark:border-white/10">
                     <div className="flex items-center gap-1 text-nordic-muted text-xs">
