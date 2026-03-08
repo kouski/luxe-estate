@@ -19,7 +19,7 @@ export function PropertyCard({ property, hiddenClass }: { property: Property, hi
                     <img
                         alt={property.image_alt}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        src={property.image_url}
+                        src={property.images[0]}
                     />
                 </Link>
                 <form action={toggleAction} className="absolute top-3 right-3 z-10">

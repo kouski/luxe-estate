@@ -14,7 +14,7 @@ export function FeaturedPropertyCard({ property }: { property: Property }) {
                     <img
                         alt={property.image_alt}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        src={property.image_url}
+                        src={property.images[0]}
                     />
                 </Link>
                 {property.tag && (

@@ -9,13 +9,12 @@ export type Property = {
   beds: number;
   baths: number;
   area: string;
-  image_url: string;
   image_alt: string;
   tag: string | null;
   featured: boolean;
   created_at: string;
   slug?: string;
-  images?: string[];
+  images: string[];
 };
 
 const DEFAULT_PAGE_SIZE = 6;
