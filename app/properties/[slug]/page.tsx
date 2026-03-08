@@ -38,7 +38,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
         notFound();
     }
 
-    // Use the images array directly — first image is the hero, rest form the gallery
+    // First image is hero, all images form the gallery
     const galleryImages = property.images;
 
     return (
@@ -51,7 +51,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                         <div className="relative aspect-[16/10] overflow-hidden rounded-xl shadow-sm group">
                             <Image
                                 src={property.images[0]}
-                                alt={property.image_alt || property.title}
+                                alt={property.image_alt}
                                 fill
                                 priority
                                 className="object-cover transition-transform duration-700 group-hover:scale-105"
